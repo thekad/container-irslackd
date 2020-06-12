@@ -1,0 +1,24 @@
+## What
+An attempt to write an link:https://github.com/adsr/irslackd[irslackd] Docker image
+
+## How
+
+Assuming you have a `cert.pem` and a `key.pem` files for SSL:
+
+----
+docker run --volume /my/host/path/ssl:/ssl:ro thekad/irslackd:latest
+----
+
+Should automatically pick up your SSL private key and certificate. If they are named differently:
+
+----
+docker run --volume /my/host/path/ssl:/data:ro --env SSL_CERT="/data/fullchain.pem" --env SSL_KEY="/data/privkey.pem" thekad/irslackd:latest
+----
+
+Or, if you're feeling adventurous (or already have SSL/TLS termination in some other way) you can pass some extra flags to use insecure mode:
+
+----
+docker run --env EXTRA_FLAGS="-i" thekad/irslackd:latest
+----
+
+It goes without saying but the above is dangerous, use only if you know what you're doing

@@ -1,4 +1,5 @@
 FROM node:8-alpine AS builder
+
 ARG GIT_REPOSITORY=https://github.com/adsr/irslackd.git
 ARG GIT_BRANCH=master
 
@@ -8,6 +9,7 @@ RUN apk add --no-cache git && \
     cd /tmp/irslackd.git && \
     git archive ${GIT_BRANCH} | tar -xC /opt/irslackd && \
     cd /opt/irslackd && \
+    rm -rf /tmp/irslackd.git && \
     npm install
 
 FROM node:8-alpine
